@@ -1,7 +1,7 @@
-import Users from "../models/users.js";
+import Users from "../models/users.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import keys from "../../config/keys.js";
+import config from "../../config/config.js";
 
 class authController {
   async registration(req, res) {
@@ -31,6 +31,7 @@ class authController {
   }
 
   async signIn(req, res) {
+    
     try {
       const { email, password } = req.body;
       const user = await Users.findOne({ where: { email: email } });
@@ -54,13 +55,10 @@ class authController {
           userId: user.id,
           role: user.role
         },
-        keys.jwt,
+        config.jwt,
         { expiresIn: 60 * 60 }
       );
-      res.json({
-        success: true,
-        token: `Bearer ${token}`,
-      });
+      
     } catch (error) {
       console.log(error)
       res.status(400).json({success: false, error: "check the input"})

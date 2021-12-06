@@ -1,4 +1,4 @@
-import keys from "../../config/keys.js";
+import keys from "../../config/config.js";
 import jwt from "jsonwebtoken";
 
 export default function (roles) {

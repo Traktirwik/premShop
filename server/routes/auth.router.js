@@ -1,6 +1,6 @@
 import { Router } from "express";
 import authController from "../controllers/authController.js";
-import roleMdw from "../middlewares/roleMdw.js";
+import roleMdw from "../middlewares/role.mdw.js";
 
 
 const router = new Router()
