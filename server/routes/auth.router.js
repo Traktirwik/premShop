@@ -1,14 +1,19 @@
 import { Router } from "express";
 import authController from "../controllers/authController.js";
 import roleMdw from "../middlewares/role.mdw.js";
+import config from "../../config/config.js"
 
 
-const router = new Router()
+const authRouter = new Router()
 
 
-router.post('/registration', authController.registration)
-router.post('/signIn', authController.signIn)
-router.get('/users', roleMdw(["ADMIN"]), authController.getUsers)
+authRouter.post('/registration', authController.registration)
+authRouter.post('/signIn', authController.signIn)
+
+authRouter.get('/signIn', (req, res) => {
+    res.sendFile(`${config.clientPath}auth.html`)
+})
+authRouter.get('/users', roleMdw(["ADMIN"]), authController.getUsers)
 
 
-export default router
+export default authRouter
