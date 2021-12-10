@@ -8,11 +8,14 @@ export default function (roles) {
     }
 
     try {
-      const token = req.headers.authorization.split(" ")[1];
+      let token = req.headers.authorization.split(" ")[1];
+      token = token.replace(/"/g, '')
       if (!token) {
         return res.status(400).json({ message: "user unauthorized" });
       }
+
       const arrOfRoles = jwt.verify(token, keys.jwt);
+
       let userRoles = arrOfRoles.role.role;
       let hasRole = false;
       userRoles.forEach((role) => {
