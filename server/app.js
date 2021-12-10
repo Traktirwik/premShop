@@ -3,6 +3,7 @@ import authRouter from './routes/auth.router.js';
 import path from 'path'
 import cors from 'cors'
 import config from '../config/config.js'
+import itemRouter from './routes/item.router.js';
 
 
 console.log(path)
@@ -14,9 +15,10 @@ app.options('*', cors())
 app.use(express.json())
 app.use(express.static(config.clientPath))
 app.use(authRouter)
+app.use(itemRouter)
 
 
- 
+
 app.get('/', (req, res) => {
     res.sendFile(`${config.clientPath}main.html`)
 })
