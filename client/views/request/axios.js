@@ -1,8 +1,8 @@
-
+const reqUrl = 'http://165.227.165.255'
 export const getToken =  async (path, data) => {
     const config = {
         method: 'post',
-        url: `http://localhost:3000${path}`,
+        url: `${reqUrl}${path}`,
         headers: { 
             'Content-Type': 'application/json'
         },
@@ -14,7 +14,7 @@ export const getToken =  async (path, data) => {
 export const reqAuthGet = async(path, token) => {
     const config = {
         method: 'get',
-        url: `http://localhost:3000${path}`,
+        url: `${reqUrl}${path}`,
         headers: { 
             'Accept': '*/*',
             'Authorization': token
@@ -26,7 +26,7 @@ export const reqAuthGet = async(path, token) => {
 export const reqAuthPost = async(path, token, data) => {
     const config = {
         method: 'get',
-        url: `http://localhost:3000${path}`,
+        url: `${reqUrl}${path}`,
         headers: { 
             'Accept': '*/*',
             'Authorization': token,
