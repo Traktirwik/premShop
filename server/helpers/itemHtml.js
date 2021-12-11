@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+export default function prepareHtml(item) {
+    return `
+    <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -20,14 +22,19 @@
             <input type="text" class="form_input" id="name_field">
             <label>Price:</label>
             <input type="text" class="form_input" id="price_field">
-            <button type="button" id="post_btn">POST</button>
+            <button type="button" id="post_btn">PUT</button>
         </div>
-        <div class="main_items" id="main_items">
-
+        <div class="item_page">
+            <div># ${item.id || "no id"}</div>
+            <div class="item_title">Name: ${item.name || "no name"}</div>
+            <div class="item_subtitle">Price: ${item.price || "no price"}</div>
         </div>
     </main>
 
-    <script src="main.js" type="module"></script>
+    <script src="items.js" type="module"></script>
 </body>
 
 </html>
+    
+    `
+}

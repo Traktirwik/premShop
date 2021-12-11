@@ -1,4 +1,5 @@
 const reqUrl = 'http://165.227.165.255'
+
 export const getToken =  async (path, data) => {
     const config = {
         method: 'post',
@@ -6,12 +7,12 @@ export const getToken =  async (path, data) => {
         headers: { 
             'Content-Type': 'application/json'
         },
-        data : data
+        data: data
     }
     return await axios(config)
 }
 
-export const reqAuthGet = async(path, token) => {
+export const reqAuthGet = async (path, token) => {
     const config = {
         method: 'get',
         url: `${reqUrl}${path}`,
@@ -23,9 +24,9 @@ export const reqAuthGet = async(path, token) => {
     return await axios(config)
 }
 
-export const reqAuthPost = async(path, token, data) => {
+export const reqAuthPost = async (path, token, data) => {
     const config = {
-        method: 'get',
+        method: 'post',
         url: `${reqUrl}${path}`,
         headers: { 
             'Accept': '*/*',

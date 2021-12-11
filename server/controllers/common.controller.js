@@ -42,10 +42,20 @@ export default class CommonController {
                     ...req.params
                 }
             })
+            res.send(null)
         }
         catch (err) {
             res.send(err)
         }
+    }
+    async getOneById(req, res) {
+        const result = await this.model.findOne({
+            where: {
+                ...req.params
+            }
+        })
+        res.send(result)
+
     }
 
 }
