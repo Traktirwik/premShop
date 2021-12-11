@@ -25,7 +25,7 @@ export const reqAuthGet = async (path, token) => {
 
 export const reqAuthPost = async (path, token, data) => {
     const config = {
-        method: 'post',
+        method: 'get',
         url: `${reqUrl}${path}`,
         headers: {
             'Accept': '*/*',
