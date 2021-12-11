@@ -1,4 +1,5 @@
 const reqUrl = 'http://165.227.165.255'
+
 export const getToken = async (path, data) => {
     const config = {
         method: 'post',
@@ -25,7 +26,7 @@ export const reqAuthGet = async (path, token) => {
 
 export const reqAuthPost = async (path, token, data) => {
     const config = {
-        method: 'get',
+        method: 'post',
         url: `${reqUrl}${path}`,
         headers: {
             'Accept': '*/*',
