@@ -13,6 +13,3 @@ connection.connect(function (err) {
         console.log("Подключение к серверу MySQL успешно установлено");
     }
 });
-connection.query("CREATE DATABASE testPremShop", (err) => {
-    console.log(err)
-})

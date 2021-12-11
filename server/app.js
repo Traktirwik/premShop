@@ -19,7 +19,7 @@ app.use(authRouter)
 app.use(itemRouter)
 
 
-
+console.log(config.test)
 app.get('/', (req, res) => {
     res.sendFile(`${config.clientPath}main.html`)
 })

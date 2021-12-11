@@ -1,21 +1,21 @@
 
-export const getToken =  async (path, data) => {
+export const getToken = async (path, data) => {
     const config = {
         method: 'post',
         url: `http://localhost:3000${path}`,
-        headers: { 
+        headers: {
             'Content-Type': 'application/json'
         },
-        data : data
+        data: data
     }
     return await axios(config)
 }
 
-export const reqAuthGet = async(path, token) => {
+export const reqAuthGet = async (path, token) => {
     const config = {
         method: 'get',
         url: `http://localhost:3000${path}`,
-        headers: { 
+        headers: {
             'Accept': '*/*',
             'Authorization': token
         },
@@ -23,11 +23,11 @@ export const reqAuthGet = async(path, token) => {
     return await axios(config)
 }
 
-export const reqAuthPost = async(path, token, data) => {
+export const reqAuthPost = async (path, token, data) => {
     const config = {
-        method: 'get',
+        method: 'post',
         url: `http://localhost:3000${path}`,
-        headers: { 
+        headers: {
             'Accept': '*/*',
             'Authorization': token,
             'Content-Type': 'application/json'

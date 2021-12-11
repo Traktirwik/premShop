@@ -21,7 +21,7 @@ const Users = sequelize.define(
     },
     role: {
       type: DataTypes.JSON,
-      defaultValue: {role: ["USER"]},
+      defaultValue: { role: ["USER"] },
     },
   },
   sequelize
@@ -32,10 +32,16 @@ const Users = sequelize.define(
     .catch((err) => console.log(err))
 );
 
-// Users.create({
-//   email: "admin",
-//   password: "admin777",
-//   role: { role: ["ADMIN", "USER"] },
-// });
+// try {
+//   const res = await Users.create({
+//     email: "admin",
+//     password: "admin777",
+//     role: { role: ["ADMIN", "USER"] }
+//   });
+//   console.log(res)
+// }
+// catch (err) {
+//   console.log(err)
+// }
 
 export default Users;
