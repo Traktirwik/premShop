@@ -8,9 +8,9 @@ const authRouter = new Router()
 
 
 authRouter.post('/registration', authController.registration)
-authRouter.post('/signIn', authController.signIn)
+authRouter.post('/auth', authController.signIn)
 
-authRouter.get('/signIn', (req, res) => {
+authRouter.get('/auth', (req, res) => {
     res.sendFile(`${config.clientPath}auth.html`)
 })
 authRouter.get('/users', roleMdw(["ADMIN"]), authController.getUsers)

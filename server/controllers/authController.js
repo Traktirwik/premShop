@@ -23,7 +23,7 @@ class authController {
         email: email,
         password: hashedPassword,
       });
-      res.json({ message: `user with email ${email} was successfully added` });
+      res.json({success: true, message: `user with email ${email} was successfully added` });
     } catch (error) {
       console.log(error)
       res.status(400).json({success: false, error: "check the input"})
