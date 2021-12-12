@@ -58,7 +58,7 @@ class authController {
         config.jwt,
         { expiresIn: 60 * 60 }
       );
-      res.json({success: true, token: `Bearer ${token}`})
+      res.json({success: true, token: `Bearer ${token}`, role: user.role})
       
     } catch (error) {
       console.log(error)

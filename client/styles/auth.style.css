@@ -1,0 +1,131 @@
+/*Обнуление*/
+*{
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+*,*:before,*:after{
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+:focus,:active{outline: none;}
+a:focus,a:active{outline: none;}
+
+nav,footer,header,aside{display: block;}
+
+html,body{
+	height: 100%;
+	width: 100%;
+	font-size: 100%;
+	line-height: 1;
+	font-size: 14px;
+	-ms-text-size-adjust: 100%;
+	-moz-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+}
+input,button,textarea{font-family:inherit;}
+
+input::-ms-clear{display: none;}
+button{cursor: pointer;}
+button::-moz-focus-inner {padding:0;border:0;}
+a, a:visited{text-decoration: none;}
+a:hover{text-decoration: none;}
+ul li{list-style: none;}
+img{vertical-align: top;}
+
+h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: 400;}
+/*--------------------*/
+
+/* fonts */
+@font-face {
+    font-family: Oswald;
+    src: url(../fonts/Oswald/Oswald-VariableFont_wght.ttf);
+}
+
+#root {
+    width: 1920px;
+    height: 980px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    background-image: url(../images/signIn.png);
+    backdrop-filter: blur(20px);
+}
+
+.auth_wrapper{
+    display: flex;
+    font-family: Oswald;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 700px;
+    height: 580px;
+    background: rgba(4, 3, 1, 0.71);
+    border: 1px solid #383934;
+    box-sizing: border-box;  
+}
+
+/* styles for authorization */
+.auth_title{
+
+    font-style: normal;
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 47px;
+    text-transform: uppercase;
+
+    color: #FFFFFF;
+}
+
+.auth_input{
+    width: 356px;
+    height: 50px;
+    background: rgba(0, 0, 0, 0.93);
+    border: 1px solid #32312F;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 15px;
+    padding-left: 20px;
+
+    color: #FFFFFF;
+}
+
+.checkBox{
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 21px;
+    color: #878787;
+}
+
+.termsBox{
+    margin-right: 5px;
+}
+.termsBox:hover{cursor: pointer;}
+
+#butt{
+    width: 355px;
+    height: 65px;
+    background: linear-gradient(180deg, #FF8500 0%, #ED3503 100%);
+    border-radius: 2px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 36px;
+    color: #FFFFFF;
+}
+
+.link_field{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+
+    color: #FFFFFF;  
+}
+.link_field:hover{color: #FF8500; cursor: pointer;}
+

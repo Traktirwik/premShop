@@ -24,15 +24,19 @@ export default class CommonController {
     }
     async updateById(req, res) {
         try {
-            const result = await this.model.upadte(req.body, {
+            const result = await this.model.update(req.body, {
                 where: {
                     ...req.params
                 }
             })
-            res.send(result)
+            if(result[0] == 0) {
+                res.json({success: false, error: `item with id ${req.params.id} is not exist`})
+            } else {
+                res.json({success: true, id: req.params.id, message: `item with id ${req.params.id} was updated`})
+            }
         }
         catch (err) {
-            res.send(err)
+            res.json({error: err})
         }
     }
     async deleteById(req, res) {
@@ -42,7 +46,11 @@ export default class CommonController {
                     ...req.params
                 }
             })
-            res.send(null)
+            if(result == 0) {
+                res.json({success: false, error: `item with id ${req.params.id} is  ot exist`})
+            } else {
+                res.json({success: true, id: req.params.id, message: `item with id ${req.params.id} was deleted`})
+            }
         }
         catch (err) {
             res.send(err)
