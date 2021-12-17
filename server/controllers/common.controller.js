@@ -5,7 +5,7 @@ export default class CommonController {
 
     async getAll(req, res) {
         try {
-            const result = await this.model.findAll()
+            const result = await this.model.findAll({order:[['price', 'ASC']]})          
             res.send(result)
         }
         catch (err) {
