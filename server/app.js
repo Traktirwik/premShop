@@ -4,6 +4,7 @@ import path from 'path'
 import cors from 'cors'
 import config from '../config/config.js'
 import itemRouter from './routes/item.router.js';
+import currencyRouter from './routes/currency.router.js'
 
 
 console.log(path)
@@ -17,6 +18,7 @@ app.use(express.static(config.clientPath))
 
 app.use(authRouter)
 app.use(itemRouter)
+app.use(currencyRouter)
 
 
 console.log(config.test)

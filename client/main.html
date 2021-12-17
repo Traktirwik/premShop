@@ -10,14 +10,24 @@
     <title>Document</title>
 </head>
 
-<body>
+<body id="app">
     <header>
         <div id="auth">
             <button id="sign_in" type="button">sign In</button>
             <button id="log_out" type="button">Log out</button>
         </div>
+        <select id="currentCurrency"></select>
     </header>
     <main>
+
+        <select id="filters">
+            <option value="all" selected>All</options>
+            <option value="tier">Уровень</options>
+            <option value="nation">Нация</options>
+        </select>
+        <div id="qwe">
+        </div>
+
         <div class="main_form">
             <label>Name:</label>
             <input type="text" class="form_input" id="name_field">
@@ -28,6 +38,7 @@
         <div class="main_items" id="main_items">
 
         </div>
+        <div id = "pagination_div"></div>
     </main>
 
     <script src="main.js" type="module"></script>

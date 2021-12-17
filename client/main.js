@@ -1,37 +1,29 @@
 import { reqAuthGet, reqAuthPost, reqNotAuthGet } from "./views/request/axios.js"
-import {editItem} from "./client_controller/admin.controller.js"
-
+import pagination from "./views/mainViews/pagination.js"
+import filter from "./views/mainViews/filters.js"
+import currency from "./views/mainViews/currency.js"
+import itemLink from "./views/mainViews/solo.item.js"
 
 document.addEventListener("DOMContentLoaded", async () => {
-    const container = document.getElementById("main_items")
-    const res = await reqAuthGet("/items", localStorage.token)
-    res.data.forEach(elem => {
-        container.insertAdjacentHTML("beforeend",
-            `<div class="item" id="${elem.id}">
-            <h2 class="item_title">${elem.name}</h2>
-            <p>${elem.price}</p>
-            </div>
-            <button class="edit" style="display: none"type="button">edit</button>
-            <button class="save" style="display: none" type="button">save</button>
-            <button class="delete" style="display: none" type="button">delete</button>
-            `)
-    });
-    const items = document.querySelectorAll(".item")
-    // items.forEach(item => {
-    //     item.addEventListener("click", () => {
-    //         window.location.href = `/items/${item.id}`
-    //     })
-    // });
-    if(localStorage.role.includes("ADMIN")) {
-        const edit = document.querySelectorAll(".edit")
-        
-        edit.forEach(item => {
-            item.style.display = "inherit"
-            item.addEventListener("click", async () => {
-                await editItem(item)
-            })
-        })
+    
+    // const container = document.getElementById("main_items")
+    // const res = await reqAuthGet("/items", localStorage.token)
+
+    //pagination
+    await pagination()
+
+
+    // filters
+    const filtersElement = document.getElementById("filters")
+    filtersElement.onchange = async () => {
+        await filter()
     }
+
+    // currency logic (limited requests, don't uncomment w/o reason)
+    // await currency()
+    
+    // each shop card
+    await itemLink()
 
 })
 async function postItem() {
@@ -43,7 +35,7 @@ async function postItem() {
 }
 const postButton = document.getElementById("post_btn")
 postButton.onclick = () => {
-    postItem()
+    // postItem()
 }
 const signInButton = document.getElementById("sign_in")
 signInButton.onclick = () => {

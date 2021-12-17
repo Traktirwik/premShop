@@ -1,8 +1,8 @@
 import DataTypes from "sequelize";
 import sequelize from "../db/dbInstance.js";
 
-const Items = sequelize.define(
-    "Items",
+const gameCurrency = sequelize.define(
+    "currency",
     {
         id: {
             type: DataTypes.INTEGER,
@@ -21,25 +21,12 @@ const Items = sequelize.define(
         image: {
             type: DataTypes.JSON,
         },
-        wheeled: {
-            type: DataTypes.BOOLEAN
-        },
-        nation: {
-            type: DataTypes.STRING
-        },
         premium: {
             type: DataTypes.BOOLEAN
-        },
-        tier: {
-            type: DataTypes.INTEGER
-        },
-        type: {
-            type: DataTypes.STRING
         },
         description: {
             type: DataTypes.TEXT('long')
         }
-
     },
     sequelize
         .sync()
@@ -47,5 +34,5 @@ const Items = sequelize.define(
             // console.log(result);
         })
         .catch((err) => console.log(err))
-);
-export default Items;
+)
+export default gameCurrency;
