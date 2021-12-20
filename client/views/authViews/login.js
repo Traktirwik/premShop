@@ -10,7 +10,7 @@ const login = () => {
         <input id="email" class="auth_input" type="text" placeholder="E-mail или имя">
         <input id="password" class="auth_input" type="text" placeholder="Пароль">
         <div class="checkBox">
-            <input type="checkbox" class="termsBox">
+            <input type="checkbox" id="signInCheck" class="termsBox">
             <label for="termsBox"">Я принимаю Пользовательское соглашение</label>
         </div>
         <button id="butt" type="button">ВОЙТИ</button>
@@ -23,6 +23,13 @@ const login = () => {
     butt.onclick = async function() {
         const email = document.getElementById("email")
         const password = document.getElementById("password")
+        const signInCheck = document.getElementById("signInCheck")
+        if(!email || !password) {
+            return alert("Заполните все поля")
+        }
+        if(signInCheck.checked == false) {
+            return alert("Примите условия пользовательского соглашения")
+        }
         const data = JSON.stringify({
             "email": email.value,
             "password": password.value

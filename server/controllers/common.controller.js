@@ -1,3 +1,8 @@
+import gameCurrency from "../models/currency.model.js"
+import Items from "../models/items.model.js"
+import Premium from "../models/premium.model.js"
+
+
 export default class CommonController {
     constructor(model) {
         this.model = model
@@ -37,15 +42,29 @@ export default class CommonController {
         console.log(req.body)
         console.log(req.params)
         try {
+            let updateId;
+            if(req.body.location == "/gold") {
+                const obj = await gameCurrency.findByPk(req.params.id)
+                console.log(obj)
+                const objToUpdate = await Items.findOne({where: {id: obj.ItemId}})
+                updateId = objToUpdate.id
+            } else if (req.body.location == "/premium") {
+                const obj = await Premium.findByPk(req.params.id)
+                console.log(obj)
+                const objToUpdate = await Items.findOne({where: {id: obj.ItemId}})
+                updateId = objToUpdate.id
+            } else {
+                updateId = req.params.id
+            }
             const result = await this.model.update(req.body, {
                 where: {
-                    ...req.params
+                    id: updateId
                 }
             })
             if(result[0] == 0) {
-                res.json({success: false, error: `item with id ${req.params.id} is not exist`})
+                res.json({success: false, error: `item with id ${updateId} is not exist`})
             } else {
-                res.json({success: true, id: req.params.id, message: `item with id ${req.params.id} was updated`})
+                res.json({success: true, id: updateId, message: `item with id ${updateId} was updated`})
             }
         }
         catch (err) {
@@ -54,15 +73,30 @@ export default class CommonController {
     }
     async deleteById(req, res) {
         try {
+            console.log(":::::::::::::::::::::::::::::::::::::::QWEQWEQWEQWEQWE:")
+            let updateId;
+            if(req.body.location == "/gold") {
+                const obj = await gameCurrency.findByPk(req.params.id)
+                console.log(obj)
+                const objToUpdate = await Items.findOne({where: {id: obj.ItemId}})
+                updateId = objToUpdate.id
+            } else if (req.body.location == "/premium") {
+                const obj = await Premium.findByPk(req.params.id)
+                console.log(obj)
+                const objToUpdate = await Items.findOne({where: {id: obj.ItemId}})
+                updateId = objToUpdate.id
+            } else {
+                updateId = req.params.id
+            }
             const result = await this.model.destroy({
                 where: {
-                    ...req.params
+                    id: updateId
                 }
             })
             if(result == 0) {
-                res.json({success: false, error: `item with id ${req.params.id} is  ot exist`})
+                res.json({success: false, error: `item with id ${updateId} is  ot exist`})
             } else {
-                res.json({success: true, id: req.params.id, message: `item with id ${req.params.id} was deleted`})
+                res.json({success: true, id: updateId, message: `item with id ${updateId} was deleted`})
             }
         }
         catch (err) {

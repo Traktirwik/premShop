@@ -1,18 +1,15 @@
 import { reqAuthGet, reqAuthPost, reqNotAuthGet, reqAuthDelete } from "./views/request/axios.js"
 import pagination from "./views/mainViews/pagination.js"
-import filter from "./views/mainViews/filters.js"
+import filters from "./views/mainViews/filters.js"
 import currency from "./views/mainViews/currency.js"
 import itemLink from "./views/mainViews/solo.item.js"
+import {deleteAllItemsFromCart} from "./client_controller/client.cart.controller.js"
 
 
 document.addEventListener("DOMContentLoaded", async () => {
     if(window.location.pathname === "/favorite") {
         const container = document.getElementById("main_items")
         const response = await reqAuthGet(`/favorites?id=${localStorage.id}`, localStorage.token)
-        const vehicles = document.getElementById("vehicles")
-        vehicles.onclick = () => {
-            window.location.href = '/vehicle'
-        }
         return await pagination(container, response)
     } 
     if(window.location.pathname === "/cartPage") {  
@@ -22,12 +19,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         <button id="deleteFromCart" type="button">Удалить все товары с корзины</button>
         `
         )
-        const response = await reqAuthGet(`/cart?id=${localStorage.id}`, localStorage.token)
-        const vehicles = document.getElementById("vehicles")
+        const allProd = document.getElementById("deleteFromCart")
         
-        vehicles.onclick = () => {
-            window.location.href = '/vehicle'
-        }
+        await deleteAllItemsFromCart(allProd)
+
+        const response = await reqAuthGet(`/cart?id=${localStorage.id}`, localStorage.token)
+     
         const forCart = () => `<button type="button" class="deleteProductFromCart">Уюрать из корзины</button>`
         await pagination(container, response, forCart)
         return;
@@ -36,21 +33,26 @@ document.addEventListener("DOMContentLoaded", async () => {
         const container = document.getElementById("main_items")
         container.innerHTML = ``
         const res = await reqAuthGet("/currency", localStorage.token)
+        await filters(container, res)
         return await pagination(container, res)
     }
     if(window.location.pathname === "/vehicle") {
         const container = document.getElementById("main_items")
         const res = await reqNotAuthGet("/vehiclesPage")
         const filtersElement = document.getElementById("filters")
-        filtersElement.onchange = async () => {
-        await filter(container)
-        }
+        await filters(container, res)
+
+        
+        
         return await pagination(container, res)
     }
     if(window.location.pathname === "/premium") {
         const container = document.getElementById("main_items")
         const res = await reqNotAuthGet("/premiumPage")
-
+        console.log(res)
+        await filters(container, res)
+        await pagination(container, res)
+        return;
     }
 
     const container = document.getElementById("main_items")
@@ -58,9 +60,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     await pagination(container, res)
 
-
     // filters
-    
+    await filters(container, res)
+
 
     //favorites
     
@@ -70,7 +72,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     
     // each shop card
     
-    
+
 })
 async function postItem() {
     const name = document.getElementById("name_field").value
@@ -125,6 +127,13 @@ const premium = document.getElementById("premium")
 premium.onclick = async () => {
     window.location.href = '/premium'
 }
+
+const userOffice = document.getElementById("office")
+userOffice.onclick = async () => {
+    window.location.href = "/office"
+}
+
+
 
 
 

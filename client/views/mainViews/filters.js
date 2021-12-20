@@ -2,12 +2,31 @@ import {reqAuthGet} from "../request/axios.js"
 import pagination from "./pagination.js"
 
 
-export default async (container) => {
-    let mySet = new Set()
-
-    const res = await reqAuthGet("/items", localStorage.token)
+export default async (container, res) => {
     const filtersDiv = document.getElementById("qwe")
     const filtersElement = document.getElementById("filters")
+    if(window.location.pathname === "/vehicle") {
+        const vehicleFilters = document.querySelectorAll(".vehicle, .generalPrem")
+        vehicleFilters.forEach(item => item.style.display = "inherit")
+    }
+    if(window.location.pathname === "/gold") {
+        console.log("ERE")
+        const goldFilters = document.querySelectorAll(".generalPrem")
+        goldFilters.forEach(item => item.style.display = "inherit")
+    }
+    if(window.location.pathname === "/premium") {
+        const vehicleFilters = document.querySelectorAll(".allFilters")
+        vehicleFilters.forEach(item => item.style.display = "inherit")
+    }
+    if(window.location.pathname === "/") {
+        const allFilters = document.querySelectorAll(".allFilters, .generalPrem")
+        allFilters.forEach(item => item.style.display = "inherit")
+    }
+    
+
+    filtersElement.onchange = () => {
+
+    
         switch(filtersElement.value) {
             case "all":
                 container.innerHTML = ``
@@ -18,6 +37,8 @@ export default async (container) => {
                 break;
 
             case "tier":
+                let tierSet = new Set()
+
                 filtersDiv.innerHTML = ``
                 filtersDiv.insertAdjacentHTML("beforeend", 
                 `
@@ -47,26 +68,27 @@ export default async (container) => {
                 tierFilters.forEach(item => {
                     item.onchange = () => {
                         if(!item.checked) {
-                           mySet.forEach(el => {
+                            tierSet.forEach(el => {
                                 if(el.tier == item.value){
-                                    mySet.delete(el)
+                                    tierSet.delete(el)
                                 }
                             })
                         } else {
                             res.data.forEach(elem => {
                                 if(elem.tier == item.value) {
-                                    mySet.add(elem)
+                                    tierSet.add(elem)
                                 }
                             })
                             container.innerHTML = ``
                         }
-                        pagination(container, {data:Array.from(mySet)})
+                        pagination(container, {data:Array.from(tierSet)})
                     } 
                 })
                 
                 break;
             
             case "nation":
+                let nationSet = new Set()
                 filtersDiv.innerHTML = ``
                 filtersDiv.insertAdjacentHTML("beforeend", 
                 `
@@ -98,23 +120,131 @@ export default async (container) => {
             nationFilters.forEach(item => {
                 item.onchange = () => {
                     if(!item.checked) {
-                       mySet.forEach(el => {
+                        nationSet.forEach(el => {
                             if(el.nation == item.value){
-                                mySet.delete(el)
+                                nationSet.delete(el)
                             }
                         })
                     } else {
                         res.data.forEach(elem => {
                             if(elem.nation == item.value) {
-                                mySet.add(elem)
+                                nationSet.add(elem)
                             }
                         })
                         container.innerHTML = ``
                     }
-                    pagination(container, {data:Array.from(mySet)})
+                    pagination(container, {data:Array.from(nationSet)})
                 }
             })
            
             break;
+
+        case "type" :
+            let typeSet = new Set()
+            filtersDiv.innerHTML = ``
+            filtersDiv.insertAdjacentHTML("beforeend", 
+            `
+            <input type="checkbox" class="vehicleType" name="SPG" value="SPG">
+            <label for="SPG">SPG</label>
+            <input type="checkbox" class="vehicleType" name="mediumTank" value="mediumTank">
+            <label for="mediumTank">Medium Tank</label>
+            <input type="checkbox" class="vehicleType" name="lightTank" value="lightTank">
+            <label for="lightTank">Light Tank</label>
+            <input type="checkbox" class="vehicleType" name="heavyTank" value="heavyTank">
+            <label for="heavyTank">Heavy Tank</label>
+            <input type="checkbox" class="vehicleType" name="AT-SPG" value="AT-SPG">
+            <label for="AT-SPG">AT-SPG</label>
+            `
+            )
+            const vehicleTypeFilter = document.querySelectorAll(".vehicleType")
+            vehicleTypeFilter.forEach(item => {
+                item.onchange = () => {
+                    if(!item.checked) {
+                        typeSet.forEach(el => {
+                            if(el.type == item.value){
+                                typeSet.delete(el)
+                            }
+                        })
+                    } else {
+                        res.data.forEach(elem => {
+                            if(elem.type == item.value) {
+                                typeSet.add(elem)
+                            }
+                        })
+                        container.innerHTML = ``
+                    }
+                    pagination(container, {data:Array.from(typeSet)})
+                }
+            })
+            break;
+
+        case "premium" :
+            let premiumSet = new Set()
+            filtersDiv.innerHTML = ``
+            filtersDiv.insertAdjacentHTML("beforeend", 
+            `
+            <input type="checkbox" class="genPrem" name="true" value="true">
+            <label for="true">Да</label>
+            <input type="checkbox" class="genPrem" name="false" value="false">
+            <label for="false">Нет</label>
+            `
+            )
+            const generalPremFilter = document.querySelectorAll(".genPrem")
+            generalPremFilter.forEach(item => {
+                item.onchange = () => {
+                    if(!item.checked) {
+                        premiumSet.forEach(el => {
+                            if(String(el.premium) == item.value){
+                                premiumSet.delete(el)
+                            }
+                        })
+                    } else {
+                        res.data.forEach(elem => {
+                            if(String(elem.premium) == item.value) {
+                                premiumSet.add(elem)
+                            }
+                        })
+                        container.innerHTML = ``
+                    }
+                    pagination(container, {data:Array.from(premiumSet)})
+                }
+            })
+            break;
+
+        case "allType" :
+            let allTypeSet = new Set()
+            filtersDiv.innerHTML = ``
+            filtersDiv.insertAdjacentHTML("beforeend", 
+            `
+            <input type="checkbox" class="allTypesBoxes" name="vehicle" value=${["SPG", "lightTank", "mediumTank", "heavyTank", "AT-SPG"]}>
+            <label for="vehicle">Техника</label>
+            <input type="checkbox" class="allTypesBoxes" name="gold" value="gold">
+            <label for="gold">Gold</label>
+            `
+            )
+            const allTypesBoxes = document.querySelectorAll(".allTypesBoxes")
+            allTypesBoxes.forEach(item => {
+                item.onchange = () => {
+                    if(!item.checked) {
+                        allTypeSet.forEach(el => {
+                            if(item.value.includes(el.type)){
+                                allTypeSet.delete(el)
+                            }
+                        })
+                    } else {
+                        res.data.forEach(elem => {
+                           
+                            if(item.value.includes(elem.type)) {
+                                console.log(elem.type)
+                                allTypeSet.add(elem)
+                            }
+                        })
+                        container.innerHTML = ``
+                    }
+                    pagination(container, {data:Array.from(allTypeSet)})
+                }
+            })
         }
+
+    }
 }

@@ -1,5 +1,6 @@
 import Items from "../models/items.model.js"
 import gameCurrency from"../models/currency.model.js"
+import Premium from "../models/premium.model.js"
 
 export default class CartController {
     constructor(model) {
@@ -34,15 +35,7 @@ export default class CartController {
 
     async addToCart(req, res) {
         try{
-            let newCartItem;
-            if(req.body.location != "/"  && req.body.location != "/vehicle") {
-                const obj = await gameCurrency.findByPk(req.body.cart)
-                const findInItems = await Items.findOne({where: {id: obj.ItemId}})
-                newCartItem = findInItems.id
-            } 
-            else {
-                newCartItem = req.body.cart
-            }
+            const newCartItem = req.body.cart
             const item = await this.model.findOne({where: {id: req.body.userId}})
             let arr = {...item.cart}
             if(arr.id.includes(newCartItem) == false) {

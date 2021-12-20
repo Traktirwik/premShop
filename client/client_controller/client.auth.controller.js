@@ -7,5 +7,5 @@ export default {
     },
     async registration() {
         registration()
-    }
+    },
 }

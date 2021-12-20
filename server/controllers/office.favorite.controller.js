@@ -1,5 +1,6 @@
 import Items from "../models/items.model.js"
 import gameCurrency from "../models/currency.model.js"
+import Premium from "../models/premium.model.js"
 
 export default class FavoriteController {
     constructor(model) {
@@ -34,14 +35,7 @@ export default class FavoriteController {
 
     async editFavorite(req, res) {
         try{
-            let newFavorite;
-            if(req.body.location !== "/" || req.body.location !== "/vehicle") {
-                const obj = await gameCurrency.findByPk(req.body.favorite)
-                const findInItems = await Items.findOne({where: {id: obj.ItemId}})
-                newFavorite = findInItems.id
-            } else {
-                newFavorite = req.body.favorite
-            }
+            const newFavorite = req.body.favorite
             const item = await this.model.findOne({where: {id: req.body.userId}})
             let arr = {...item.favorite}
             if(arr.id.includes(newFavorite) == false) {

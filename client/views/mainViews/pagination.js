@@ -2,7 +2,8 @@ import { editItem } from "../../client_controller/admin.controller.js"
 import {adminLogic} from "../../client_controller/admin.controller.js"
 import {reqAuthGet} from "../request/axios.js"
 import { checkFavorite, clickToFavFunction } from "../../client_controller/client.favorite.controller.js"
-import { checkCart, clickToCartFunction, deleteItemFromCart } from "../../client_controller/client.cart.controller.js"
+import { checkCart, clickToCartFunction, deleteItemFromCart , deleteAllItemsFromCart} from "../../client_controller/client.cart.controller.js"
+import filters from "./filters.js"
 export default async (container, res, forCart) => {
     const allObjects = res.data.length 
     const elPerPage = 15
@@ -27,6 +28,7 @@ export default async (container, res, forCart) => {
         if(elem == undefined) {
             break
         } 
+
         container.insertAdjacentHTML("beforeend",
             `<div class="item" style="background-image: url(${elem.image.image.big_icon}); background-repeat: no-repeat;  background-size: 100%" id="${elem.id}">
             <h2 class="item_title">${elem.name}</h2>
@@ -36,8 +38,8 @@ export default async (container, res, forCart) => {
             <span class=type>${elem.type}</span>
             <span class=description>${elem.description}</span>
             <span class=price>${elem.price}</span>
-            ${await checkFavorite(elem.id)}
-            ${await checkCart(elem.id)}
+            ${await checkFavorite(elem.ItemId || elem.id)}
+            ${await checkCart(elem.ItemId || elem.id)}
             ${forCart ? forCart() : ''}
             </div>
             <button class="edit" style="display: none"type="button">edit</button>
@@ -52,6 +54,9 @@ export default async (container, res, forCart) => {
     await clickToFavFunction()
     await clickToCartFunction()
     await deleteItemFromCart()
+
+    // await deleteAllItemsFromCart()
+
     
 
     pagination_button.forEach(item => {
@@ -70,8 +75,8 @@ export default async (container, res, forCart) => {
                         <span class=type>${elem.type}</span>
                         <span class=description>${elem.description}</span>
                         <span class=price>${elem.price}</span>
-                        ${await checkFavorite(elem.id)}
-                        ${await checkCart(elem.id)}
+                        ${await checkFavorite(elem.ItemId || elem.id)}
+                        ${await checkCart(elem.ItemId || elem.id)}
                         ${forCart ? forCart() : ''}
                         </div>
                         <button class="edit" style="display: none"type="button">edit</button>
@@ -83,6 +88,8 @@ export default async (container, res, forCart) => {
                 await clickToFavFunction()
                 await clickToCartFunction()
                 await deleteItemFromCart()
+                // await deleteAllItemsFromCart()
+
 
 
             } else { 
@@ -103,8 +110,8 @@ export default async (container, res, forCart) => {
                         <span class=type>${elem.type}</span>
                         <span class=description>${elem.description}</span>
                         <span class=price>${elem.price}</span>
-                        ${await checkFavorite(elem.id)}
-                        ${await checkCart(elem.id)}
+                        ${await checkFavorite(elem.ItemId || elem.id)}
+                        ${await checkCart(elem.ItemId || elem.id)}
                         ${forCart ? forCart() : ''}
                         </div>
                         <button class="edit" style="display: none"type="button">edit</button>
@@ -115,6 +122,8 @@ export default async (container, res, forCart) => {
                     await clickToFavFunction()
                     await clickToCartFunction()
                     await deleteItemFromCart()
+                    // await deleteAllItemsFromCart()
+
 
 
                 }
