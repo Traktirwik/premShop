@@ -5,9 +5,10 @@ import cors from 'cors'
 import config from '../config/config.js'
 import itemRouter from './routes/item.router.js';
 import currencyRouter from './routes/currency.router.js'
+import favoriteRouter from './routes/favorite.router.js'
+import cartRouter from './routes/cart.router.js';
+import premRouter from './routes/premium.router.js';
 
-
-console.log(path)
 const PORT = process.env.PORT || 3000
 
 const app = express()
@@ -19,9 +20,11 @@ app.use(express.static(config.clientPath))
 app.use(authRouter)
 app.use(itemRouter)
 app.use(currencyRouter)
+app.use(favoriteRouter)
+app.use(cartRouter)
+app.use(premRouter)
 
 
-console.log(config.test)
 app.get('/', (req, res) => {
     res.sendFile(`${config.clientPath}main.html`)
 })

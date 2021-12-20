@@ -1,5 +1,18 @@
 import {reqAuthPut, reqAuthDelete} from "../views/request/axios.js"
 
+const adminLogic = async () => {
+    if (localStorage.role.includes("ADMIN")) {
+    const edit = document.querySelectorAll(".edit");
+
+    edit.forEach((item) => {
+      item.style.display = "inherit";
+      item.addEventListener("click", async () => {
+        await editItem(item);
+      });
+    });
+  }
+}
+
 async function editItem(node) {
     const item = node.previousElementSibling
     const arr = [...item.children]
@@ -27,5 +40,6 @@ async function editItem(node) {
 }
 
 export {
-    editItem
+    editItem,
+    adminLogic
 }

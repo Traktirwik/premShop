@@ -32,6 +32,7 @@ const login = () => {
         if(response.data.success == true) {
             localStorage.setItem("token", JSON.stringify(response.data.token))
             localStorage.setItem("role", JSON.stringify(response.data.role.role))
+            localStorage.setItem("id", JSON.stringify(response.data.userId))
         } 
         if(localStorage.token) {
             window.location.href = "/"

@@ -23,6 +23,14 @@ const Users = sequelize.define(
       type: DataTypes.JSON,
       defaultValue: { role: ["USER"] },
     },
+    favorite: {
+      type: DataTypes.JSON,
+      defaultValue: {id: []},
+    },
+    cart: {
+      type: DataTypes.JSON,
+      defaultValue: {id: []}
+    }
   },
   sequelize
     .sync()
