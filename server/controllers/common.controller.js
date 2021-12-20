@@ -13,16 +13,29 @@ export default class CommonController {
         }
     }
 
+    async getVehicle(req, res) {
+        try {
+            const result = await this.model.findAll({where: {type: ["SPG", "mediumTank", "lightTank", "heavyTank", "AT-SPG"]}, order:[['price', 'ASC']]})
+            res.json(result)
+        } catch(error) {
+            console.log(error)
+            res.json(error)
+        }
+    }
+
     async create(req, res) {
+        
         try {
             const result = await this.model.create(req.body)
             res.send(result)
         }
         catch (err) {
-            res.send(result)
+            res.send(err)
         }
     }
     async updateById(req, res) {
+        console.log(req.body)
+        console.log(req.params)
         try {
             const result = await this.model.update(req.body, {
                 where: {

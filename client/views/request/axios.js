@@ -64,7 +64,7 @@ export const reqAuthPut = async (path, token, data) => {
     return await axios(config)
 }
 
-export const reqAuthDelete = async(path, token) => {
+export const reqAuthDelete = async(path, token, data) => {
     const config = {
         method: 'delete',
         url: `${reqUrl}${path}`,
@@ -73,6 +73,7 @@ export const reqAuthDelete = async(path, token) => {
             'Authorization': token,
             'Content-Type': 'application/json'
         },
+        data: data,
     }
     return await axios(config)
 }

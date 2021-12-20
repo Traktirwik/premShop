@@ -1,30 +1,76 @@
-import { reqAuthGet, reqAuthPost, reqNotAuthGet } from "./views/request/axios.js"
+import { reqAuthGet, reqAuthPost, reqNotAuthGet, reqAuthDelete } from "./views/request/axios.js"
 import pagination from "./views/mainViews/pagination.js"
 import filter from "./views/mainViews/filters.js"
 import currency from "./views/mainViews/currency.js"
 import itemLink from "./views/mainViews/solo.item.js"
 
-document.addEventListener("DOMContentLoaded", async () => {
-    
-    // const container = document.getElementById("main_items")
-    // const res = await reqAuthGet("/items", localStorage.token)
 
-    //pagination
-    await pagination()
+document.addEventListener("DOMContentLoaded", async () => {
+    if(window.location.pathname === "/favorite") {
+        const container = document.getElementById("main_items")
+        const response = await reqAuthGet(`/favorites?id=${localStorage.id}`, localStorage.token)
+        const vehicles = document.getElementById("vehicles")
+        vehicles.onclick = () => {
+            window.location.href = '/vehicle'
+        }
+        return await pagination(container, response)
+    } 
+    if(window.location.pathname === "/cartPage") {  
+        const container = document.getElementById("main_items")
+        container.insertAdjacentHTML("afterend", 
+        `
+        <button id="deleteFromCart" type="button">Удалить все товары с корзины</button>
+        `
+        )
+        const response = await reqAuthGet(`/cart?id=${localStorage.id}`, localStorage.token)
+        const vehicles = document.getElementById("vehicles")
+        
+        vehicles.onclick = () => {
+            window.location.href = '/vehicle'
+        }
+        const forCart = () => `<button type="button" class="deleteProductFromCart">Уюрать из корзины</button>`
+        await pagination(container, response, forCart)
+        return;
+    } 
+    if(window.location.pathname === "/gold") {
+        const container = document.getElementById("main_items")
+        container.innerHTML = ``
+        const res = await reqAuthGet("/currency", localStorage.token)
+        return await pagination(container, res)
+    }
+    if(window.location.pathname === "/vehicle") {
+        const container = document.getElementById("main_items")
+        const res = await reqNotAuthGet("/vehiclesPage")
+        const filtersElement = document.getElementById("filters")
+        filtersElement.onchange = async () => {
+        await filter(container)
+        }
+        return await pagination(container, res)
+    }
+    if(window.location.pathname === "/premium") {
+        const container = document.getElementById("main_items")
+        const res = await reqNotAuthGet("/premiumPage")
+
+    }
+
+    const container = document.getElementById("main_items")
+    const res = await reqAuthGet("/items", localStorage.token)
+
+    await pagination(container, res)
 
 
     // filters
-    const filtersElement = document.getElementById("filters")
-    filtersElement.onchange = async () => {
-        await filter()
-    }
+    
+
+    //favorites
+    
 
     // currency logic (limited requests, don't uncomment w/o reason)
     // await currency()
     
     // each shop card
-    await itemLink()
-
+    
+    
 })
 async function postItem() {
     const name = document.getElementById("name_field").value
@@ -46,6 +92,38 @@ logOutButton.onclick = () => {
     localStorage.token = ''
     localStorage.role = []
     window.location.href = "auth"
+}
+await itemLink()
+
+gold_route.onclick = async () => {
+    window.location.href = "/gold"
+    
+}
+
+const fav = document.getElementById("favorite")
+fav.onclick = async () => {
+    window.location.href = '/favorite'
+}
+
+const cart = document.getElementById("cart")
+cart.onclick = async () => {
+    window.location.href = '/cartPage'
+    
+}
+
+const allProd = document.getElementById("allProducts")
+allProd.onclick = async () => {
+    window.location.href = '/'
+}
+
+const vehicles = document.getElementById("vehicles")
+vehicles.onclick = async () => {
+    window.location.href = '/vehicle'
+}
+
+const premium = document.getElementById("premium")
+premium.onclick = async () => {
+    window.location.href = '/premium'
 }
 
 
