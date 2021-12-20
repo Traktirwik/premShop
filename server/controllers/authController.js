@@ -6,7 +6,7 @@ import config from "../../config/config.js";
 class authController {
   async registration(req, res) {
     try {
-      const { email, password } = req.body;
+      const { email, username, password, repeatPassword } = req.body;
       const candidate = await Users.findOne({ where: { email: email } });
       if (candidate) {
         return res
@@ -19,8 +19,12 @@ class authController {
           .status(400)
           .json({ message: "password should be 7 symbols or more" });
       }
+      if(password !== repeatPassword) {
+        return res.status(400).json({error: "Wrong password repeated"})
+      }
       const user = await Users.create({
         email: email,
+        username: username,
         password: hashedPassword,
       });
       res.json({success: true, message: `user with email ${email} was successfully added` });
@@ -68,11 +72,21 @@ class authController {
 
   async getUsers(req, res) {
     try {
-      const users = await Users.findAll({attributes: ['id', 'email', 'role']})
+      const users = await Users.findAll({attributes: ['id', 'email', 'role', 'username']})
+
       res.json(users);
     } catch (error) {
       console.log(error)
       res.status(400).json({success: false, error: "some server error"})
+    }
+  }
+  async getUserOffice(req, res) {
+    try {
+      const user = await Users.findByPk(req.params.id, {attributes: ['id', 'email','username', 'photo', 'role', 'favorite', 'cart']})
+      res.json(user)
+    } catch (error) {
+      console.log(error)
+      res.json(error)
     }
   }
 }

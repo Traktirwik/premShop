@@ -24,7 +24,8 @@ async function editItem(node) {
     save.style.display="inherit"
     save.onclick = async () => {
         const itemId = item.id
-        let objToPut = {}
+        console.log(item)
+        let objToPut = {location: window.location.pathname}
         if(arr[0].firstElementChild.value != '') Object.assign(objToPut, {name: arr[0].firstElementChild.value});
         if(arr[1].firstElementChild.value != '') Object.assign(objToPut, {price: arr[1].firstElementChild.value});
         await reqAuthPut(`/items/${itemId}`,localStorage.token, objToPut)
@@ -34,7 +35,9 @@ async function editItem(node) {
     deleteItem.style.display = "inherit"
     deleteItem.onclick = async() => {
         const itemId = item.id
-        await reqAuthDelete(`/items/${itemId}`, localStorage.token)
+        let objToDelete = {location: window.location.pathname}
+
+        await reqAuthDelete(`/items/${itemId}`, localStorage.token, objToDelete)
         location.reload()
     }
 }

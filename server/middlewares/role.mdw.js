@@ -13,23 +13,21 @@ export default function (roles) {
       if (!token) {
         return res.status(400).json({ message: "user unauthorized" });
       }
+     
 
       const arrOfRoles = jwt.verify(token, keys.jwt);
-
       let userRoles = arrOfRoles.role.role;
       let hasRole = false;
       userRoles.forEach((role) => {
         if (roles.includes(role)) {
           hasRole = true;
-          
-        } 
-        if (!hasRole){
-          return res
-            .status(403)
-            .json({ success: false, message: "no permission" });
-        }
+        }         
       });
-
+      if (!hasRole){
+        return res
+          .status(403)
+          .json({ success: false, message: "no permission" });
+      }
       next();
     } catch (error) {
       console.log(error);

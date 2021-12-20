@@ -2,9 +2,9 @@ import {reqAuthGet, reqAuthPost} from "../views/request/axios.js"
 
 async function checkFavorite(elemId) {
     const response = await reqAuthGet(`/favorites?id=${localStorage.id}`, localStorage.token)
-    const qwe = response.data.map(el => el.id)
+    const arr = response.data.map(el => el.id)
     
-    if(qwe.includes(elemId)) {
+    if(arr.includes(elemId)) {
         return `<input type="checkbox" class="favorites" name="id" value=${elemId} checked>`
     } else {
         return `<input type="checkbox" class="favorites" name="id" value=${elemId}>`

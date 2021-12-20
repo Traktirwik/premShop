@@ -20,7 +20,6 @@ async function clickToCartFunction() {
             item.onclick = async () => {
                 console.log(item.checked)
                 if(!item.checked){
-                    console.log("ezez")
                     return;
                 }
                 const data = {
@@ -36,8 +35,8 @@ async function clickToCartFunction() {
 }
 
 async function deleteItemFromCart() {
-    const test = document.querySelectorAll(".deleteProductFromCart")
-    test.forEach(item => {
+    const oneProd = document.querySelectorAll(".deleteProductFromCart")
+    oneProd.forEach(item => {
         item.onclick = async () => {
             console.log(item.parentElement.id)
             const data = {
@@ -50,8 +49,18 @@ async function deleteItemFromCart() {
     })
 }
 
+async function deleteAllItemsFromCart(allProd) {
+    allProd.onclick = async () => {
+        console.log(localStorage.id)
+        
+        await reqAuthDelete(`/allCart?id=${localStorage.id}`, localStorage.token)
+        location.reload()
+    }
+}
+
 export {
     checkCart,
     clickToCartFunction,
-    deleteItemFromCart
+    deleteItemFromCart,
+    deleteAllItemsFromCart
 }
