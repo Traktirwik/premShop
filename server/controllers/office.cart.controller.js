@@ -33,13 +33,13 @@ export default class CartController {
         }
     }
 
-    async addToCart(req, res) {
+    async editCart(req, res) {
         try{
-            const newCartItem = req.body.cart
+            const newCart = req.body.cart
             const item = await this.model.findOne({where: {id: req.body.userId}})
             let arr = {...item.cart}
-            if(arr.id.includes(newCartItem) == false) {
-                arr.id.push(newCartItem)
+            if(arr.id.includes(newCart) == false) {
+                arr.id.push(newCart)
 
                 try {
                     const result = await this.model.update({cart: arr}, {
@@ -52,39 +52,26 @@ export default class CartController {
                     console.log(error)
                     res.json(error)
                 }
-            } else {
-                res.json({success: false, message: "the item is already in the cart"})
-            }
                 
-      
+            } else {
+                const filteredArr = arr.id.filter(item => item != newCart)
+                try {
+                    const result = await this.model.update({cart: {id: filteredArr}}, {
+                        where: {
+                            id: req.body.userId
+                        }
+                    })
+                    res.json(result)
+                } catch(error) {
+                    console.log(error)
+                    res.json(error)
+                }
+            }
             
         } catch(err) {
             console.log(err)
             res.json(err)
         }
-    }
-    async deleteObjectFromCart(req, res) {
-        try{
-            const item = await this.model.findOne({where: {id: req.body.userId}})
-            let arr = {...item.cart}
-            const filteredArr = arr.id.filter(item => item != req.body.cart)
-            try {
-                const result = await this.model.update({cart: {id: filteredArr}}, {
-                    where: {
-                        id: req.body.userId
-                    }
-                })
-                res.json(result)
-            } catch(error) {
-                console.log(error)
-                res.json(error)
-            }
-         
-        } catch(error) {
-            console.log(error)
-            res.json(error)
-        }
-    
     }
     async deleteAllFromCart(req, res) {
         try{

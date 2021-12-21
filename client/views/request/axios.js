@@ -1,5 +1,5 @@
-const reqUrl = 'http://165.227.165.255'
-// const reqUrl = 'http://localhost:3000'
+// const reqUrl = 'http://165.227.165.255'
+const reqUrl = 'http://localhost:3000'
 
 export const getToken =  async (path, data) => {
     const config = {

@@ -11,35 +11,86 @@
 </head>
 
 <body id="app">
-    <header>
-        <div id="auth">
-            <button id="sign_in" type="button">sign In</button>
-            <button id="log_out" type="button">Log out</button>
-            <button id="office" type="button">Настройки пользователя</button>
-            
+    <header class="header">
+        <div class="wrapper">
+            <div class="header_wrapper">
+                <div class="header_logo">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjIxIiBoZWlnaHQ9IjIxIj48cGF0aCBmaWxsPSIjRkZGIiBkPSJNMTAuNSAwQzQuNyAwIDAgNC43IDAgMTAuNVM0LjcgMjEgMTAuNSAyMSAyMSAxNi4zIDIxIDEwLjUgMTYuMyAwIDEwLjUgMHptNC4zIDE3LjhjLjUtMS44LjgtMy43LjctNS44OTkuNi4xOTkuOS4zIDEuNC4zOTktLjYtMS42LTEuMy0zLjEtMi4yLTQuNS0uOCAxLjUtMS45IDIuOS0yLjkgNC4xMDFsMS44LS4xMDFjLTEuNSAyLjctMy42OTkgNC02LjM5OSA0LjQtLjYtMy0uMi04IDMuMy0xMC40bC4zIDEuN2MuNy0xLjEgMi0yLjUgMy0zLjVDMTIuMiAzLjQgMTAuNCAzLjIgOC43IDMuNWMuMy4yLjYuNi45LjgtMy45IDEuNi02IDQuMy03LjQgNy41LS4xLS40LS4xLS44LS4xLTEuM0MyLjEgNS44IDUuOSAyIDEwLjYgMnM4LjUgMy44IDguNSA4LjVjLS4xIDMuMS0xLjggNS45LTQuMyA3LjN6Ii8+PC9zdmc+"
+                        alt="" class="logo_img">
+                    <span class="logo_text">Wargaming</span>
+                </div>
+                <nav class="header_nav">
+                    <select id="currentCurrency" >
+                        <option value="USD">USD</option>
+                        <option value="EUR">EUR</option>
+                        <option value="BYN">BYN</option>
+                        <option value="RUB">RUB</option>
+                        
+                        
+                        
+                    </select>
+                    <a  href="/" class="nav_link">Главная</a>
+                    <span  id="cart" class="nav_link pointer">Корзина</span>
+                    <span  id="favorite" class="nav_link pointer">Избранное</span>
+                    <!-- <span  id="office" class="nav_link">Настройки</span> -->
+                </nav>
+                <div class="header_auth">
+                    <span class="auth_text" id="nameUs">
+                        <span class="auth_link pointer" id="sign_in">Войти</span> или <span  class="auth_link pointer" id="log_out">Выйти</span>
+                    </span>
+                </div>
+            </div>
         </div>
-        <select id="currentCurrency"></select>
-        <button id="favorite" type="button">Favorites</button>
-        <button id="cart" type="button">Cart</button>
     </header>
-    <main>
+    <main class="main">
         
+        <div class="wrapper">
+            <div class="main_sub-header">
+                <div class="sub-header_logo">
+                    <img src="https://catoolwebdav-net-cdn.gcdn.co/catool/24c03af21d7aa4f14d9e845c0b0f04d0.png" alt="">
+                </div>
+                <div class="sub-header_filters sub-header_title">
+                    <div id = "allProducts" location="/" class="sub-header_filter pointer ">Всё</div>
+                    <div id="gold_route" location="/gold" class="sub-header_filter pointer">Золото</div>
+                    <div id="vehicles" location="/vehicle" class="sub-header_filter pointer">Техника</div>
+                    <div id = "premium" location="/premium" class="sub-header_filter pointer">Премиум</div>
+                </div>
+                
+                
+            </div>
+            <div class="item_filters">
+                <div class="item_filter">
+                    <select id="filters" class="filter_select">
+                        <option value="all" selected>Все товары</options>
+                        <option class="vehicle" value="tier" style="display: none;">Уровень</options>
+                        <option class="vehicle" value="nation" style="display: none;">Нация</options>
+                        <option class="vehicle" value="type" style="display: none;">Тип</options>
+                        <option class="generalPrem" value="premium" style="display: none;">Премиум</options>
+                        <option class="allFilters" value="allType" style="display: none;">Тип</options>  
+                    </select>
+                    <div id="qwe">
+                    </div>
+                </div>
+            </div>
+            <!-- <button type="button" id="addProduct">Добавить товар</button> -->
+            <div class="main_items" id="main_items">
 
-        <select id="filters">
-            <option value="all" selected>Все товары</options>
-            <option class="vehicle" value="tier" style="display: none;">Уровень</options>
-            <option class="vehicle" value="nation" style="display: none;">Нация</options>
-            <option class="vehicle" value="type" style="display: none;">Тип</options>
-            <option class="generalPrem" value="premium" style="display: none;">Премиум</options>
-            <option class="allFilters" value="allType" style="display: none;">Тип</options>
-         
-        </select>
-        <div id="qwe">
+            </div>
+            <div id = "gold_container">
+            
+            </div>
+            <div id = "pagination_div"></div>
+        </div>       
+        <div id="modal_window_create_item" style="display: none;">
+            <input type="text" class="modal_input" id="modal_input_name" placeholder="Наименование товара">
+            <input type="text" class="modal_input" id="modal_input_price" placeholder="Цена товара">
+            <input type="text" class="modal_input" id="modal_input_type" placeholder="НТип товара">
+            <input type="text" class="modal_input" id="modal_input_nation" placeholder="Страна товара">
+            <input type="text" class="modal_input" id="modal_input_level" placeholder="уровень товара">
+            <input type="text" class="modal_input" id="modal_input_description" placeholder="Описание товара">
+            <input type="text" class="modal_input" id="modal_input_sale" placeholder="скидка на товар">
+            <input type="text" class="modal_input" id="modal_input_image" placeholder="Изображения для товара">
         </div>
-        <button id = "gold_route" type = "button">Золото</button>
-        <button id = "vehicles" type = "button">Техника</button>
-        <button id = "allProducts" type = "button">Все товары</button>
-        <button id = "premium" type = "button">Премиум</button>
 
         <div class="main_form">
             <label>Name:</label>
@@ -48,15 +99,12 @@
             <input type="text" class="form_input" id="price_field">
             <button type="button" id="post_btn">POST</button>
         </div>
-        <div class="main_items" id="main_items">
-
-        </div>
-        <div id = "gold_container">
-            
-        </div>
-        <div id = "pagination_div"></div>
+        
+        
     </main>
+    <footer class="footer">
 
+    </footer>
     <script src="main.js" type="module"></script>
 </body>
 

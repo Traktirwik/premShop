@@ -10,7 +10,6 @@ export default async (container, res) => {
         vehicleFilters.forEach(item => item.style.display = "inherit")
     }
     if(window.location.pathname === "/gold") {
-        console.log("ERE")
         const goldFilters = document.querySelectorAll(".generalPrem")
         goldFilters.forEach(item => item.style.display = "inherit")
     }

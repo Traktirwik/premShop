@@ -9,7 +9,8 @@ const authRouter = new Router()
 
 authRouter.post('/registration', authController.registration)
 authRouter.post('/auth', authController.signIn)
-
+authRouter.put('/office/:id', roleMdw(["ADMIN"]), authController.editUserRole)
+authRouter.delete('/office/:id', roleMdw(["ADMIN"]), authController.deleteUserById)
 authRouter.get('/auth', (req, res) => {
     res.sendFile(`${config.clientPath}auth.html`)
 })

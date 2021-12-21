@@ -39,9 +39,11 @@ export default class CommonController {
         }
     }
     async updateById(req, res) {
-        console.log(req.body)
+        console.log(req.body,":::::::::::::!!!!!!!!!!!!!!!!!!!!::::::::::::::::::::::::::::")
         console.log(req.params)
         try {
+            let oldPrice;
+            let sale;
             let updateId;
             if(req.body.location == "/gold") {
                 const obj = await gameCurrency.findByPk(req.params.id)
@@ -56,6 +58,23 @@ export default class CommonController {
             } else {
                 updateId = req.params.id
             }
+            if(req.body.sale == true) {
+                try{
+                    const oldModel = await this.model.findByPk(updateId)
+                    console.log(oldModel)
+                    oldPrice = oldModel.price
+                    const newPrice = req.body.price
+                    if(oldPrice > newPrice) {
+                        sale = (oldPrice-newPrice)/oldPrice*100
+                        Object.assign(req.body, {sale: [sale,oldPrice]})
+                    } else {
+                        res.json({success: false, message: "incorrect price"})
+                    }
+                } catch(error) {
+                    console.log(error)
+                    res.json(error)
+                }
+            } 
             const result = await this.model.update(req.body, {
                 where: {
                     id: updateId
@@ -64,16 +83,22 @@ export default class CommonController {
             if(result[0] == 0) {
                 res.json({success: false, error: `item with id ${updateId} is not exist`})
             } else {
-                res.json({success: true, id: updateId, message: `item with id ${updateId} was updated`})
+                if(sale) {
+                    console.log("ASDASDASDASDASDASDQWEQWEQWE")
+                    res.json({success: true, id: updateId, sale: sale, oldPrice: oldPrice})
+                } else {
+                    res.json({success: true, id: updateId, message: `item with id ${updateId} was updated`})
+                }
             }
         }
         catch (err) {
-            res.json({error: err})
+        
+            console.log(err, "HEEEEEEEEEEEEEEEEEEEEEEEEEEEERE")
+            res.send(err)
         }
     }
     async deleteById(req, res) {
         try {
-            console.log(":::::::::::::::::::::::::::::::::::::::QWEQWEQWEQWEQWE:")
             let updateId;
             if(req.body.location == "/gold") {
                 const obj = await gameCurrency.findByPk(req.params.id)

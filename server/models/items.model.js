@@ -22,6 +22,9 @@ const Items = sequelize.define(
             type: DataTypes.INTEGER,
             allowNull: false,
         },
+        sale: {
+            type: DataTypes.JSON
+        },
         image: {
             type: DataTypes.JSON,
         },
