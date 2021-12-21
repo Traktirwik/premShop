@@ -20,6 +20,9 @@ const gameCurrency = sequelize.define(
             type: DataTypes.INTEGER,
             allowNull: false,
         },
+        sale: {
+            type: DataTypes.BOOLEAN
+        },
         image: {
             type: DataTypes.JSON,
         },

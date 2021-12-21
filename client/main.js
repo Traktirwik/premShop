@@ -2,11 +2,24 @@ import { reqAuthGet, reqAuthPost, reqNotAuthGet, reqAuthDelete } from "./views/r
 import pagination from "./views/mainViews/pagination.js"
 import filters from "./views/mainViews/filters.js"
 import currency from "./views/mainViews/currency.js"
-import itemLink from "./views/mainViews/solo.item.js"
 import {deleteAllItemsFromCart} from "./client_controller/client.cart.controller.js"
-
+import cartView from "./views/mainViews/cart.js"
 
 document.addEventListener("DOMContentLoaded", async () => {
+
+   
+    
+    const nameUs = document.getElementById("nameUs")
+    if(localStorage.token) {
+        const response = await reqAuthGet(`/user/${localStorage.id}`, localStorage.token)
+        const username = response.data.username
+        console.log(username)
+        nameUs.innerHTML=`<span  class="auth_link" id="log_out">Выйти</span> <span id="office">${username}</span>`
+        const userOffice = document.getElementById("office")
+        userOffice.addEventListener("click", async() => {
+        window.location.href = "/office"
+    })
+    }
     if(window.location.pathname === "/favorite") {
         const container = document.getElementById("main_items")
         const response = await reqAuthGet(`/favorites?id=${localStorage.id}`, localStorage.token)
@@ -16,7 +29,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const container = document.getElementById("main_items")
         container.insertAdjacentHTML("afterend", 
         `
-        <button id="deleteFromCart" type="button">Удалить все товары с корзины</button>
+        <button id="deleteFromCart" class="orange_btn" type="button">Удалить все товары с корзины</button>
         `
         )
         const allProd = document.getElementById("deleteFromCart")
@@ -25,8 +38,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const response = await reqAuthGet(`/cart?id=${localStorage.id}`, localStorage.token)
      
-        const forCart = () => `<button type="button" class="deleteProductFromCart">Уюрать из корзины</button>`
-        await pagination(container, response, forCart)
+        await cartView(container, response)
         return;
     } 
     if(window.location.pathname === "/gold") {
@@ -42,8 +54,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         const filtersElement = document.getElementById("filters")
         await filters(container, res)
 
-        
-        
         return await pagination(container, res)
     }
     if(window.location.pathname === "/premium") {
@@ -52,6 +62,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.log(res)
         await filters(container, res)
         await pagination(container, res)
+        
         return;
     }
 
@@ -68,12 +79,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     
 
     // currency logic (limited requests, don't uncomment w/o reason)
-    // await currency()
+    
     
     // each shop card
     
-
+    
 })
+
+const subheaderFilters = document.querySelectorAll(".sub-header_filter")
+subheaderFilters.forEach((filter)=>{
+    if(filter.attributes.location.value === location.pathname){
+        filter.classList.add("selected")
+    }
+    else{
+        filter.classList.remove("selected")
+    }
+})
+
 async function postItem() {
     const name = document.getElementById("name_field").value
     const price = document.getElementById("price_field").value
@@ -95,7 +117,6 @@ logOutButton.onclick = () => {
     localStorage.role = []
     window.location.href = "auth"
 }
-await itemLink()
 
 gold_route.onclick = async () => {
     window.location.href = "/gold"
@@ -128,10 +149,7 @@ premium.onclick = async () => {
     window.location.href = '/premium'
 }
 
-const userOffice = document.getElementById("office")
-userOffice.onclick = async () => {
-    window.location.href = "/office"
-}
+
 
 
 

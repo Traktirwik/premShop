@@ -13,8 +13,7 @@ cartRouter.get("/cart", (req, res) => cartController.getAllcartObjects(req, res)
 cartRouter.get("/cartPage", (req, res) => {
     res.sendFile(`${config.clientPath}main.html`)
 })
-cartRouter.post("/cart", roleMdw(["ADMIN", "USER"]), (req, res) => cartController.addToCart(req, res))
-cartRouter.delete("/cart", roleMdw(["ADMIN", "USER"]), (req, res) => cartController.deleteObjectFromCart(req, res))
+cartRouter.post("/cart", roleMdw(["ADMIN", "USER"]), (req, res) => cartController.editCart(req, res))
 cartRouter.delete("/allCart", roleMdw(["ADMIN", "USER"]), (req, res) => cartController.deleteAllFromCart(req, res))
 
 export default cartRouter;

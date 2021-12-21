@@ -3,8 +3,16 @@ import Controller from "./client_controller/office.controller.js"
 
 
 document.addEventListener("DOMContentLoaded", async () => {
+    if(sessionStorage.usersConfig == 'true') {
+        console.log("HERE")
+        window.location.href = '#'
+        setTimeout(() => {
+            window.location.href = '#usersConfig'
+        }, 100)
+    }
+    
+
     const dynamic = await reqAuthGet(`/user/${localStorage.id}`, localStorage.token)
-    console.log(dynamic)
     const mainOffice = document.getElementById("mainOffice")
     mainOffice.insertAdjacentHTML("beforeend", 
     `
@@ -30,7 +38,25 @@ document.addEventListener("DOMContentLoaded", async () => {
     usersControl.onclick = () => {
         window.location.href = "#usersConfig"
     }
-    const office
+    const office = document.getElementById("office")
+    office.onclick = () => {
+        sessionStorage.usersConfig = false
+        window.location.href = "/office"
+    }
+    const to_main = document.getElementById("to_main")
+    to_main.onclick = () => {
+        sessionStorage.usersConfig = false
+        window.location.href = "/"
+    }
+    const log_out = document.getElementById("log_out")
+    log_out.onclick = () => {
+        sessionStorage.usersConfig = false
+        localStorage.id = ''
+        localStorage.token = ''
+        localStorage.role = ''
+        window.location.href = "/auth"
+
+    }
 
     function getRouteInfo() {
         const hash = location.hash ? location.hash.slice(1) : '';
@@ -49,6 +75,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
     
     window.addEventListener('hashchange', () => {
+        console.log("WORK")
         handleHash()
         
     })
